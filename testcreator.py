@@ -25,7 +25,7 @@ if re.match("(.+)/(.+)", targetName):
 		testName = targetName.replace("/main/", "/test/")
 	targetName = re.match("(.+)/(.+)", targetName).group(2)
 
-testName = testName + "Test";
+testName = testName + "Test"
 testFile = open(testName+".java", "w")
 className = targetName[0].lower() + targetName[1:]
 
@@ -49,5 +49,5 @@ for line in array:
 		print(methodName)
 		create_test(methodName)
 
-testFile.write("}\n");
+testFile.write("}\n")
 testFile.close()
