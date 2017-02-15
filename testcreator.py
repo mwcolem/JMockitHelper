@@ -35,16 +35,16 @@ for line in array:
 	elif re.match("(\s+)(public)(\W)(static)(\W)(\w+)(\W)(\w+)(.+)({)", line):
 		methodName = re.match("(\s+)(public)(\W)(static)(\W)(\w+)(\W)(\w+)(.+)({)", line).group(8)
 		print(methodName)
-		testFile.write("\t@Test\n\tpublic void " + methodName + "Test() {\n\t")
-		testFile.write("\tnew Expectations() {{\n\n\t\t}};\n\n")
-		testFile.write("\tnew Verifications() {{\n\n\t\t}};\n")
+		testFile.write("\t@Test\n\tpublic void " + methodName + "Test() {\n")
+		testFile.write("\t\tnew Expectations() {{\n\n\t\t}};\n\n")
+		testFile.write("\t\tnew Verifications() {{\n\n\t\t}};\n")
 		testFile.write("\t}\n\n")
 	elif re.match("(\s+)(public)(\W)(?!static)(\w+)(\W)(\w+)(.+)({)", line):
 		methodName = re.match("(\s+)(public)(\W)(\w+)(\W)(\w+)(.+)({)", line).group(6)
 		print(methodName)
-		testFile.write("\t@Test\n\tpublic void " + methodName + "Test() {\n\t")
-		testFile.write("\tnew Expectations() {{\n\n\t\t}};\n\n")
-		testFile.write("\tnew Verifications() {{\n\n\t\t}};\n")
+		testFile.write("\t@Test\n\tpublic void " + methodName + "Test() {\n")
+		testFile.write("\t\tnew Expectations() {{\n\n\t\t}};\n\n")
+		testFile.write("\t\tnew Verifications() {{\n\n\t\t}};\n")
 		testFile.write("\t}\n\n")
 
 testFile.write("}\n");
