@@ -2,6 +2,12 @@
 
 import sys, re
 
+def create_test(method_name):
+	testFile.write("\t@Test\n\tpublic void " + method_name + "Test() {\n")
+	testFile.write("\t\tnew Expectations() {{\n\n\t\t}};\n\n")
+	testFile.write("\t\tnew Verifications() {{\n\n\t\t}};\n")
+	testFile.write("\t}\n\n")
+
 targetName = sys.argv[1]
 if re.match("(.+)\.java", targetName):
 	targetName = targetName[0:targetName.index(".")]
@@ -35,17 +41,11 @@ for line in array:
 	elif re.match("(\s+)(public)(\W)(static)(\W)(\w+)(\W)(\w+)(.+)({)", line):
 		methodName = re.match("(\s+)(public)(\W)(static)(\W)(\w+)(\W)(\w+)(.+)({)", line).group(8)
 		print(methodName)
-		testFile.write("\t@Test\n\tpublic void " + methodName + "Test() {\n")
-		testFile.write("\t\tnew Expectations() {{\n\n\t\t}};\n\n")
-		testFile.write("\t\tnew Verifications() {{\n\n\t\t}};\n")
-		testFile.write("\t}\n\n")
+		create_test(methodName)
 	elif re.match("(\s+)(public)(\W)(?!static)(\w+)(\W)(\w+)(.+)({)", line):
 		methodName = re.match("(\s+)(public)(\W)(\w+)(\W)(\w+)(.+)({)", line).group(6)
 		print(methodName)
-		testFile.write("\t@Test\n\tpublic void " + methodName + "Test() {\n")
-		testFile.write("\t\tnew Expectations() {{\n\n\t\t}};\n\n")
-		testFile.write("\t\tnew Verifications() {{\n\n\t\t}};\n")
-		testFile.write("\t}\n\n")
+		create_test(methodName)
 
 testFile.write("}\n");
 testFile.close()
