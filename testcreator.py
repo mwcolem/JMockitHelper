@@ -1,10 +1,12 @@
 #!/usr/bin/python
 
-import sys, re
+import sys
+import re
 
 def create_test(method_name):
 	testFile.write("\t@Test\n\tpublic void " + method_name + "Test() {\n")
 	testFile.write("\t\tnew Expectations() {{\n\n\t\t}};\n\n")
+	testFile.write("\t\tassertThat(,is());\n\n")
 	testFile.write("\t\tnew Verifications() {{\n\n\t\t}};\n")
 	testFile.write("\t}\n\n")
 
