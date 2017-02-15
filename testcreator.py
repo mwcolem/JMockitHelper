@@ -48,6 +48,14 @@ for line in array:
 		methodName = re.match("(\s+)(public)(\W)(\w+)(\W)(\w+)(.+)({)", line).group(6)
 		print(methodName)
 		create_test(methodName)
+	elif re.match("(\s+)(protected)(\W)(static)(\W)(\w+)(\W)(\w+)(.+)({)", line):
+		methodName = re.match("(\s+)(protected)(\W)(static)(\W)(\w+)(\W)(\w+)(.+)({)", line).group(8)
+		print(methodName)
+		create_test(methodName)
+	elif re.match("(\s+)(protected)(\W)(?!static)(\w+)(\W)(\w+)(.+)({)", line):
+		methodName = re.match("(\s+)(protected)(\W)(\w+)(\W)(\w+)(.+)({)", line).group(6)
+		print(methodName)
+		create_test(methodName)
 
 testFile.write("}\n")
 testFile.close()
