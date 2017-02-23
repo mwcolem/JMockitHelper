@@ -28,6 +28,7 @@ if re.match("(.+)/(.+)", targetName):
 testName = testName + "Test"
 testFile = open(testName+".java", "w")
 className = targetName[0].lower() + targetName[1:]
+methodName = ""
 
 print(targetName)
 for line in array:
@@ -56,6 +57,9 @@ for line in array:
 		methodName = re.match("(\s+)(protected)(\W)(\w+)(\W)(\w+)(.+)({)", line).group(6)
 		print(methodName)
 		create_test(methodName)
+	elif re.match("(\s+)(if)(.+)({)", line):
+		print(methodName + "if branch")
+		create_test(methodName + "IfBranch")
 
 testFile.write("}\n")
 testFile.close()
