@@ -41,23 +41,15 @@ for line in array:
 		testFile.write("public class " + targetName + "Test { " + '\n\t@Tested\n\tprivate ' + targetName + " "
 		        + className + ";\n\n\t@Before\n\tpublic void setup() " 
 			+ " {\n\t\t" + className + " = new " + targetName + "();\n\t}\n\n")
-	elif re.match("(\s+)(public)(\W)(static)(\W)(\w+)(\W)(\w+)(.+)({)", line):
-		methodName = re.match("(\s+)(public)(\W)(static)(\W)(\w+)(\W)(\w+)(.+)({)", line).group(8)
+	elif re.match("(\s+)(public|protected)(\W)(static)(\W)(\w+)(\W)(\w+)(.+)({)", line, re.MULTILINE):
+		methodName = re.match("(\s+)(public)(\W)(static)(\W)(\w+)(\W)(\w+)(.+)({)", line, re.MULTILINE).group(8)
 		print(methodName)
 		create_test(methodName)
-	elif re.match("(\s+)(public)(\W)(?!static)(\w+)(\W)(\w+)(.+)({)", line):
-		methodName = re.match("(\s+)(public)(\W)(\w+)(\W)(\w+)(.+)({)", line).group(6)
+	elif re.match("(\s+)(public|protected)(\W)(?!static)(\w+)(\W)(\w+)(.+)({)", line, re.MULTILINE):
+		methodName = re.match("(\s+)(public)(\W)(\w+)(\W)(\w+)(.+)({)", line, re.MULTILINE).group(6)
 		print(methodName)
 		create_test(methodName)
-	elif re.match("(\s+)(protected)(\W)(static)(\W)(\w+)(\W)(\w+)(.+)({)", line):
-		methodName = re.match("(\s+)(protected)(\W)(static)(\W)(\w+)(\W)(\w+)(.+)({)", line).group(8)
-		print(methodName)
-		create_test(methodName)
-	elif re.match("(\s+)(protected)(\W)(?!static)(\w+)(\W)(\w+)(.+)({)", line):
-		methodName = re.match("(\s+)(protected)(\W)(\w+)(\W)(\w+)(.+)({)", line).group(6)
-		print(methodName)
-		create_test(methodName)
-	elif re.match("(\s+)(if)(.+)({)", line):
+	elif re.match("(\s+)(if)(.+)({)", line, re.MULTILINE):
 		print(methodName + "if branch")
 		create_test(methodName + "IfBranch")
 
