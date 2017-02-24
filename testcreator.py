@@ -36,7 +36,7 @@ for line in array:
 		testFile.write(line + "\n")
 		testFile.write("import mockit.Mock;\nimport mockit.MockUp;\nimport mockit.Tested;\nimport mockit.Expectations;\nimport mockit.Verifications;\n" +
                         "import org.junit.Before;\nimport org.junit.Test;\n\nimport java.util.Date;\nimport java.util.HashSet;\n" +
-                        "import java.util.Set;\nimport java.util.LinkedList;\n\n" +
+                        "import java.util.Set;\nimport java.util.LinkedList;\nimport java.util.List;\n\n" +
                          "import static org.hamcrest.MatcherAssert.assertThat;\nimport static org.hamcrest.core.Is.is;\n\n")
 		testFile.write("public class " + targetName + "Test { " + '\n\t@Tested\n\tprivate ' + targetName + " "
 		        + className + ";\n\n\t@Before\n\tpublic void setup() " 
