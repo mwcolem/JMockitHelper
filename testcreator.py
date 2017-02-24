@@ -42,14 +42,14 @@ for line in array:
 		        + className + ";\n\n\t@Before\n\tpublic void setup() " 
 			+ " {\n\t\t" + className + " = new " + targetName + "();\n\t}\n\n")
 	elif re.match("(\s+)(public|protected)(\W)(static)(\W)(\w+)(\W)(\w+)(.+)({)", line, re.MULTILINE):
-		methodName = re.match("(\s+)(public)(\W)(static)(\W)(\w+)(\W)(\w+)(.+)({)", line, re.MULTILINE).group(8)
+		methodName = re.match("(\s+)(public|protected)(\W)(static)(\W)(\w+)(\W)(\w+)(.+)({)", line, re.MULTILINE).group(8)
 		print(methodName)
 		create_test(methodName)
 	elif re.match("(\s+)(public|protected)(\W)(?!static)(\w+)(\W)(\w+)(.+)({)", line, re.MULTILINE):
-		methodName = re.match("(\s+)(public)(\W)(\w+)(\W)(\w+)(.+)({)", line, re.MULTILINE).group(6)
+		methodName = re.match("(\s+)(public|protected)(\W)(\w+)(\W)(\w+)(.+)({)", line, re.MULTILINE).group(6)
 		print(methodName)
 		create_test(methodName)
-	elif re.match("(\s+)(if)(.+)({)", line, re.MULTILINE):
+	elif re.search("(\s+)(if)(.+)({)", line, re.MULTILINE):
 		print(methodName + "if branch")
 		create_test(methodName + "IfBranch")
 
