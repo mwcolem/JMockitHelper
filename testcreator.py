@@ -4,11 +4,12 @@ import sys
 import re
 
 def create_test(method_name):
-	testFile.write("\t@Test\n\tpublic void " + method_name + "Test() {\n")
-	testFile.write("\t\tnew Expectations() {{\n\n\t\t}};\n\n")
-	testFile.write("\t\tassertThat(,is());\n\n")
-	testFile.write("\t\tnew Verifications() {{\n\n\t\t}};\n")
-	testFile.write("\t}\n\n")
+	testFile.write("\t@Test\n\tpublic void " + method_name + "Test() {\n" +
+		"\t\tnew MockUp<>() {\n\t\t\t@Mock\n\t\t};\n\n" +
+		"\t\tnew Expectations() {{\n\n\t\t}};\n\n" +
+		"\t\tassertThat(,is());\n\n" +
+		"\t\tnew Verifications() {{\n\n\t\t}};\n" +
+		"\t}\n\n")
 
 targetName = sys.argv[1]
 if re.match("(.+)\.java", targetName):
@@ -34,22 +35,23 @@ print(targetName)
 for line in array:
 	if re.match("package(.+)", line):
 		testFile.write(line + "\n")
-		testFile.write("import mockit.Mock;\nimport mockit.MockUp;\nimport mockit.Tested;\nimport mockit.Expectations;\nimport mockit.Verifications;\n" +
-                        "import org.junit.Before;\nimport org.junit.Test;\n\nimport java.util.Date;\nimport java.util.HashSet;\n" +
-                        "import java.util.Set;\nimport java.util.LinkedList;\nimport java.util.List;\n\n" +
-                         "import static org.hamcrest.MatcherAssert.assertThat;\nimport static org.hamcrest.core.Is.is;\n\n")
+		testFile.write("import mockit.Mock;\nimport mockit.MockUp;\nimport mockit.Tested;\nimport mockit.Expectations;\n" +
+			"import mockit.Verifications;\nimport org.junit.Before;\nimport org.junit.Test;\n\nimport java.util.Date;\n" +
+			"import java.util.Map;\nimport java.util.HashMap;\nimport java.util.HashSet;\nimport java.util.Set;\n" +
+			"import java.util.LinkedList;\nimport java.util.List;\n\nimport static org.hamcrest.MatcherAssert.assertThat;\n"+
+			"import static org.hamcrest.core.Is.is;\nimport static org.hamcrest.Matchers.nullValue;\n\n")
 		testFile.write("public class " + targetName + "Test { " + '\n\t@Tested\n\tprivate ' + targetName + " "
 		        + className + ";\n\n\t@Before\n\tpublic void setup() " 
 			+ " {\n\t\t" + className + " = new " + targetName + "();\n\t}\n\n")
-	elif re.match("(\s+)(public|protected)(\W)(static)(\W)(\w+)(\W)(\w+)(.+)({)", line, re.MULTILINE):
-		methodName = re.match("(\s+)(public|protected)(\W)(static)(\W)(\w+)(\W)(\w+)(.+)({)", line, re.MULTILINE).group(8)
+	elif re.match("(\s+)?(public|protected)(\W)(static)(\W)(\w+)(\W)(\w+)(.+)(\n)?(.+)({)", line, re.MULTILINE):
+		methodName = re.match("(\s+)?(public|protected)(\W)(static)(\W)(\w+)(\W)(\w+)(.+)(\n)?(.+)({)", line, re.MULTILINE).group(8)
 		print(methodName)
 		create_test(methodName)
-	elif re.match("(\s+)(public|protected)(\W)(?!static)(\w+)(\W)(\w+)(.+)({)", line, re.MULTILINE):
-		methodName = re.match("(\s+)(public|protected)(\W)(\w+)(\W)(\w+)(.+)({)", line, re.MULTILINE).group(6)
+	elif re.match("(\s+)?(public|protected)(\W)(?!static)(?!enum)(\w+)(\W)(\w+)(.+)(\n)?(.+)({)", line, re.MULTILINE):
+		methodName = re.match("(\s+)?(public|protected)(\W)(\w+)(\W)(\w+)(.+)(\n)?(.+)({)", line, re.MULTILINE).group(6)
 		print(methodName)
 		create_test(methodName)
-	elif re.search("(\s+)(if)(.+)({)", line, re.MULTILINE):
+	elif re.search("(\s+)(if)(.+)(\n)?(.+)({)", line, re.MULTILINE):
 		print(methodName + "if branch")
 		create_test(methodName + "IfBranch")
 
