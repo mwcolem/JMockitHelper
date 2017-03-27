@@ -47,8 +47,8 @@ for line in array:
 		methodName = re.match("(\s+)?(public|protected)(\W)(static)(\W)(\w+)(\W)(\w+)(.+)(\n)?(.+)({)", line, re.MULTILINE).group(8)
 		print(methodName)
 		create_test(methodName)
-	elif re.match("(\s+)?(public|protected)(\W)(?!static)(?!enum)(\w+)(\W)(\w+)(.+)(\n)?(.+)({)", line, re.MULTILINE):
-		methodName = re.match("(\s+)?(public|protected)(\W)(\w+)(\W)(\w+)(.+)(\n)?(.+)({)", line, re.MULTILINE).group(6)
+	elif re.match("(\s+)?(public|protected)(\W)(?!static)(?!enum)(?!class)(\w+)(\W)(\w+)(.+)(\n)?(.+)({)", line, re.MULTILINE):
+		methodName = re.match("(\s+)?(public|protected)(\W)(?!static)(?!enum)(?!class)(\w+)(\W)(\w+)(.+)(\n)?(.+)({)", line, re.MULTILINE).group(6)
 		print(methodName)
 		create_test(methodName)
 	elif re.search("(\s+)(if)(.+)(\n)?(.+)({)", line, re.MULTILINE):
