@@ -29,13 +29,12 @@ if re.match("(.+)/(.+)", targetName):
 testName = testName + "Test"
 testFile = open(testName+".java", "w")
 className = targetName[0].lower() + targetName[1:]
-methodName = ""
 
 print(targetName)
 for line in array:
 	if re.match("package(.+)", line):
 		testFile.write(line + "\n")
-		testFile.write("import mockit.Mock;\nimport mockit.MockUp;\nimport mockit.Tested;\nimport mockit.Expectations;\n" +
+		testFile.write("import mockit.Mock;\nimport mockit.MockUp;\nimport mockit.Mocked;\nimport mockit.Tested;\nimport mockit.Expectations;\n" +
 			"import mockit.Verifications;\nimport org.junit.Before;\nimport org.junit.Test;\n\nimport java.util.Date;\n" +
 			"import java.util.Map;\nimport java.util.HashMap;\nimport java.util.HashSet;\nimport java.util.Set;\n" +
 			"import java.util.LinkedList;\nimport java.util.List;\n\nimport static org.hamcrest.MatcherAssert.assertThat;\n"+
@@ -43,6 +42,10 @@ for line in array:
 		testFile.write("public class " + targetName + "Test { " + '\n\t@Tested\n\tprivate ' + targetName + " "
 		        + className + ";\n\n\t@Before\n\tpublic void setup() " 
 			+ " {\n\t\t" + className + " = new " + targetName + "();\n\t}\n\n")
+	elif re.match("(\s+)?(.+)(public)(\s)(boolean)(\s)(equals)(.+)(\n)?(.+)({)", line):
+		testFile.write("\t@Test\n\tpublic void equalsSelf() {\n\t\tassertThat(" + className +
+			".equals(" + className + "), is(true));\n\t}\n\n\t@Test\n\tpublic void equalsWrongClass() {" +
+			"\n\t\tassertThat(" + className + ".equals(new String()), is(false));\n\t}\n\n")
 	elif re.match("(\s+)?(public|protected)(\W)(static)(\W)(\w+)(\W)(\w+)(.+)(\n)?(.+)({)", line, re.MULTILINE):
 		methodName = re.match("(\s+)?(public|protected)(\W)(static)(\W)(\w+)(\W)(\w+)(.+)(\n)?(.+)({)", line, re.MULTILINE).group(8)
 		print(methodName)
@@ -52,7 +55,7 @@ for line in array:
 		print(methodName)
 		create_test(methodName)
 	elif re.search("(\s+)(if)(.+)(\n)?(.+)({)", line, re.MULTILINE):
-		print(methodName + "if branch")
+		print(methodName + " if branch")
 		create_test(methodName + "IfBranch")
 
 testFile.write("}\n")
