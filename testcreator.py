@@ -34,7 +34,7 @@ print(targetName)
 for line in array:
 	if re.match("package(.+)", line):
 		testFile.write(line + "\n")
-		testFile.write("import mockit.Mock;\nimport mockit.MockUp;\nimport mockit.Mocked;\nimport mockit.Tested;\nimport mockit.Expectations;\n" +
+		testFile.write("import mockit.Mock;\nimport mockit.MockUp;\nimport mockit.Mocked;\nimport mockit.Tested;\nimport mockit.Expectations;\nimport mockit.Deencapsulation;\n" +
 			"import mockit.Verifications;\nimport org.junit.Before;\nimport org.junit.Test;\n\nimport java.util.Date;\n" +
 			"import java.util.Map;\nimport java.util.HashMap;\nimport java.util.HashSet;\nimport java.util.Set;\n" +
 			"import java.util.LinkedList;\nimport java.util.List;\n\nimport static org.hamcrest.MatcherAssert.assertThat;\n"+
