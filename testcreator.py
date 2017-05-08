@@ -31,6 +31,7 @@ testFile = open(testName+".java", "w")
 className = targetName[0].lower() + targetName[1:]
 
 print(targetName)
+methodName = ""
 for line in array:
 	if re.match("package(.+)", line):
 		testFile.write(line + "\n")
@@ -47,7 +48,7 @@ for line in array:
 			".equals(" + className + "), is(true));\n\t}\n\n\t@Test\n\tpublic void equalsWrongClass() {" +
 			"\n\t\tassertThat(" + className + ".equals(new String()), is(false));\n\t}\n\n\t@Test\n\tpublic void equalsNull() {\n\t\tassertThat(" 
 				+ className + ".equals(null), is(false));\n\t}\n\n\t@Test\n\tpublic void equalsOther() {\n\t\t"
-			+ targetName + " " + className + "1 = new " + targetName + "();\n\n\t\tassertThat(" + className + ".equals(" + className + "1), is(true));\n\t}\n\n\t")
+			+ targetName + " " + className + "1 = new " + targetName + "();\n\n\t\tassertThat(" + className + ".equals(" + className + "1), is(true));\n\t}\n\n")
 	elif re.match("(\s+)?(public|protected)(\W)(static)(\W)(\w+)(\W)(\w+)(.+)(\n)?(.+)({)", line, re.MULTILINE):
 		methodName = re.match("(\s+)?(public|protected)(\W)(static)(\W)(\w+)(\W)(\w+)(.+)(\n)?(.+)({)", line, re.MULTILINE).group(8)
 		print(methodName)
